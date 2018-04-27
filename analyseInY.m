@@ -17,8 +17,8 @@ for ii=1:s
     yy=y;
     yS=smooth(y,smoothfac,'moving');
     y=yS;
-    figure
-    plot(x,yy,x,yS)
+%     figure
+%     plot(x,yy,x,yS)
     yIfind=find(y>thold);
     yInegFind=find(y<-thold);
     count=0; 

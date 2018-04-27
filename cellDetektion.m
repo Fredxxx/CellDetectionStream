@@ -14,14 +14,22 @@ thold = 150;
 smoothfac = 10;
 close all
 [result, img] = cellDetector(reader, numImg, thold, smoothfac);
-fpathS=strcat(fpath(1:end-4), 'foundAll.ome.tiff');
-bfsave(img, fpathS);
+
 %%  sort cells data
 tDiff = 940; % in µs
 pS = 0.1; % in µm
 sortedResult = sortCellData(result, numImg, tDiff, pS);
 %% get positive images (full, cut, cut background) and negative images (full only)
 [neg, pos, posS, pos0, posResults] = saveNegPosImg(reader, sortedResult, numImg);
+%% get Y information 
+resCellY = analyseInY(posS, pos0, thold, smoothfac);
+posResults = writeYData(posResults, resCellY);
+%% show Data
+
+%plot(posResults(:,11), posResults(:,10),'o')
+%% save Data
+% fpathS=strcat(fpath(1:end-4), 'foundAll.ome.tiff');
+% bfsave(img, fpathS);
 % fpathSneg=strcat(fpath(1:end-4), 'foundNeg.ome.tiff');
 % bfsave(neg, fpathSneg);
 % fpathSpos=strcat(fpath(1:end-4), 'foundPos.ome.tiff');
@@ -30,5 +38,3 @@ sortedResult = sortCellData(result, numImg, tDiff, pS);
 % bfsave(posS, fpathSposCut);
 % fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut_Background.ome.tiff');
 % bfsave(pos0, fpathSposCut);
-%% get Y information 
-resCellY = analyseInY(posS, pos0, thold, smoothfac);

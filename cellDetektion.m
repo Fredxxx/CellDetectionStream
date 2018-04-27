@@ -16,7 +16,7 @@ close all
 [result, img] = cellDetector(reader, numImg, thold, smoothfac);
 fpathS=strcat(fpath(1:end-4), 'foundAll.ome.tiff');
 bfsave(img, fpathS);
-%%  sort cells
+%%  sort cells data
 tDiff = 940; % in µs
 pS = 0.1; % in µm
 sortedResult = sortCellData(result, numImg, tDiff, pS);
@@ -31,3 +31,4 @@ sortedResult = sortCellData(result, numImg, tDiff, pS);
 % fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut_Background.ome.tiff');
 % bfsave(pos0, fpathSposCut);
 %% get Y information 
+resCellY = analyseInY(posS, pos0, thold, smoothfac);

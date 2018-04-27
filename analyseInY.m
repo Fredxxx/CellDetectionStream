@@ -1,20 +1,24 @@
-%% calculate y and dy
-thold = 150;
-smoothfac = 10;
+function [resCell] = analyseInY(posS, pos0, thold, smoothfac)
+%thold = 150;
+%smoothfac = 10;
 imgCell0(:,:,1)=pos0(:,:,1);
 imgCell0_x=squeeze(sum(imgCell0));
 x=1:length(imgCell0_x);
-resCell=cell(numImg,3);
+s1=size(posS);
+s=s1(3);
+resCell=cell(s,3);
 cc=0;
-for ii=1:numImg
-    imgCell2(:,:,1)=bfGetPlane(reader, ii);
+for ii=1:s
+    imgCell2(:,:,1)=posS(:,:,ii);
     imgCell2_x=squeeze(sum(imgCell2));
+    imgCell0(:,:,1)=pos0(:,:,ii);
+    imgCell0_x=squeeze(sum(imgCell0));
     y=imgCell2_x-imgCell0_x;
     yy=y;
     yS=smooth(y,smoothfac,'moving');
     y=yS;
-%     figure
-%     plot(x,yy,x,yS)
+    figure
+    plot(x,yy,x,yS)
     yIfind=find(y>thold);
     yInegFind=find(y<-thold);
     count=0; 
@@ -28,7 +32,6 @@ for ii=1:numImg
                maxis(count)=yIfind(1)+(yIfind(i)-yIfind(1))/2;
                yIfind=[];
                cc=cc+1;
-               p(:,:,cc)=imgCell2(:,:,1);
             elseif yIfind(i+1)-yIfind(i) ~= 1
                maxis(count)=yIfind(1)+(yIfind(i)-yIfind(1))/2;
                yIfind=yIfind(i+1:end);
@@ -52,11 +55,4 @@ for ii=1:numImg
     end % loop to find minima
     resCell{ii,1}=maxis;
     resCell{ii,2}=minis;
-  
-    if ~isempty(maxis)||~isempty(minis)
-%         figure
-%         plot(x,yy,x,yS)
-    else
-       imgCell0_x=imgCell2_x;
-    end
 end

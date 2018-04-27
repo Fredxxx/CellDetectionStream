@@ -23,11 +23,15 @@ for i=1:numImg
        yO=round(xPos+xDim(1)/2);
        if yU < 1 % cut images and make sure to not cut outside of image
            yU=1;
-           yO=xDim(1)+1;
+           yO=xDim(1)-1;
+           'yU<1'
        elseif yO > xDim(2)-xDim(1)
            yU=xDim(2)-xDim(1);
-           yO=xDim(2);
+           yO=xDim(2)+1;
+           'yO>1'
        end
+       yU
+       yO
            posS(:,:,cPos)=pos(:,yU:yO,cPos);
            pos0(:,:,cPos)=posB(:,yU:yO);
     end

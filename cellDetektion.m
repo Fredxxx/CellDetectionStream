@@ -1,6 +1,6 @@
 %% read Tiff stack
 baseFolder= 'C:\Users\Frederik\Documents\MATLAB\Knop\cellDetection\';
-fname = 'oil_small.tif';
+fname = 'oil.tif';
 fpath = strcat(baseFolder,fname);
 [~,~,numImg]=readTifStack(fpath);
 %% bioformats
@@ -28,13 +28,13 @@ posResults = writeYData(posResults, resCellY);
 
 %plot(posResults(:,11), posResults(:,10),'o')
 %% save Data
-% fpathS=strcat(fpath(1:end-4), 'foundAll.ome.tiff');
-% bfsave(img, fpathS);
-% fpathSneg=strcat(fpath(1:end-4), 'foundNeg.ome.tiff');
-% bfsave(neg, fpathSneg);
-% fpathSpos=strcat(fpath(1:end-4), 'foundPos.ome.tiff');
-% bfsave(pos, fpathSpos);
-% fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut.ome.tiff');
-% bfsave(posS, fpathSposCut);
-% fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut_Background.ome.tiff');
-% bfsave(pos0, fpathSposCut);
+fpathS=strcat(fpath(1:end-4), 'foundAll.ome.tiff');
+bfsave(img, fpathS);
+fpathSneg=strcat(fpath(1:end-4), 'foundNeg.ome.tiff');
+bfsave(neg, fpathSneg);
+fpathSpos=strcat(fpath(1:end-4), 'foundPos.ome.tiff');
+bfsave(pos, fpathSpos);
+fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut.ome.tiff');
+bfsave(posS, fpathSposCut);
+fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut_Background.ome.tiff');
+bfsave(pos0, fpathSposCut);

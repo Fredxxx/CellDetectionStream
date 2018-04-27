@@ -1,0 +1,32 @@
+%% calculate y and dy
+cNeg=0;
+cPos=0;
+for i=1:numImg
+    if sortedResult(i,1) == -1
+       xPos=sortedResult(i,6);
+       cNeg=cNeg+1;
+       neg(:,:,cNeg)=bfGetPlane(reader, i);
+    elseif sortedResult(i,1) == 1
+       xPos=sortedResult(i,6);
+       cPos=cPos+1;
+       pos(:,:,cPos)=bfGetPlane(reader, i);
+       xDim = size(pos);
+       yU=round(xPos-xDim(1)/2);
+       yO=round(xPos+xDim(1)/2);
+       if yU < 1
+           yU=1;
+           yO=xDim(1);
+       elseif yO > xDim(2)-xDim(1)
+           yU=xDim(2)-xDim(1);
+           yO=xDim(1):xDim(2);
+       end
+           posS(:,:,cPos)=pos(:,yU:yO,cPos);
+       if sortedResult(i-1,1)~= 1 && sortedResult(i,1)== 1
+           posH(:,:)=bfGetPlane(reader, i-1);
+           
+           pos0(:,:,cPos)=posH(:,yU:yO);
+       end
+    end
+end
+fpathSposCut=strcat(fpath(1:end-4), 'foundPosCut_Background.ome.tiff');
+bfsave(pos0, fpathSposCut);

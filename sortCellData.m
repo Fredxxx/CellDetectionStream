@@ -8,13 +8,34 @@ for k = 1:length(result)
     if ~isempty(result{k})   
         t=result{k,1};
         tt=result{k,2};  
-        if length(t) == 2 && length(tt) == 1
+        if length(t) == 2 && length(tt) == 1 % two maxima and one minima
              x(k,1)=1;
              x(k,2)=t(1);
              x(k,3)=t(2);
              x(k,4)=tt;
              x(k,6)=t(1)+(t(2)-t(1))/2;
              x(k,8)=t(2)-t(1);
+        elseif length(t) == 1 && length(tt) == 2 % two minima and one maxima
+             x(k,1)=2;
+             x(k,2)=tt(1);
+             x(k,3)=tt(2);
+             x(k,4)=t;
+             x(k,6)=tt(1)+(tt(2)-tt(1))/2;
+             x(k,8)=tt(2)-tt(1);
+        elseif length(t) > 2 && t(end)-t(1) < 20
+             x(k,1)=3;
+             x(k,2)=t(1);
+             x(k,3)=t(end);
+             x(k,4)=tt;
+             x(k,6)=t(1)+(t(end)-t(end))/2;
+             x(k,8)=t(end)-t(1);   
+        elseif length(tt) > 2 && t(end)-tt(1) < 40
+             x(k,1)=4;
+             x(k,2)=tt(1);
+             x(k,3)=tt(end);
+             x(k,4)=t;
+             x(k,6)=tt(1)+(tt(end)-tt(end))/2;
+             x(k,8)=tt(end)-tt(1);  
         else
              x(k,1)=-1;
         end

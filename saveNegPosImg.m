@@ -1,9 +1,14 @@
 function [neg, pos, posS, pos0, posResults] = saveNegPosImg(reader, sortedResult, numImg)
 cNeg=0;
 cPos=0;
+% pos=[];
+% neg=[];
+% posS=[];
+% pos0=[];
+posResults=[];
 for i=1:numImg
     if i ~= 1
-        if sortedResult(i-1,1)~= 1 && sortedResult(i,1)== 1 % save background image in RAM
+        if sortedResult(i-1,1)~= 1 && sortedResult(i,1) > 0 % save background image in RAM
            posB(:,:)=bfGetPlane(reader, i-1);
         end
     end
@@ -12,7 +17,7 @@ for i=1:numImg
        xPos=sortedResult(i,6);
        cNeg=cNeg+1;
        neg(:,:,cNeg)=bfGetPlane(reader, i);
-    elseif sortedResult(i,1) == 1 % sort positive images 
+    elseif sortedResult(i,1) > 0 % sort positive images
        xPos=sortedResult(i,6);
        cPos=cPos+1;
        posResults(cPos,1:10)=sortedResult(i,1:10);
